@@ -6,8 +6,19 @@ import { generateTitleBox, generateMiddleParagraph, generateOddBox } from './uiU
 
 //Handle the update button click
 document.getElementById("update-button").addEventListener("click", function() {
-  // Perform your desired function here
+  const button = this;
+
+  button.disabled = true
+  button.classList.add("disabled-button");
+
+  eventCombosToDisplay = []
+  clearEventContainers();
   parseData();
+
+  setTimeout(() => {
+    button.disabled = false;
+    button.classList.remove("disabled-button"); 
+}, 1000); 
 });
 
 //Array for events to display
@@ -43,8 +54,16 @@ function parseData() {
 
 
 function displayEvents() {
-    eventCombosToDisplay.forEach(event => {
-        const newEventBox = document.createElement("div")
+  eventCombosToDisplay.forEach((event, index) => {
+      setTimeout(() => {
+          displayOneEvent(event);
+      }, index * 50); 
+  });
+}
+
+
+function displayOneEvent(event) {
+  const newEventBox = document.createElement("div")
         newEventBox.classList.add("event-container")
 
         const titleBox = generateTitleBox(event)
@@ -66,7 +85,10 @@ function displayEvents() {
         } else {
             eventBox.appendChild(newEventBox)
         }
-    })
+
+        requestAnimationFrame(() => {
+          newEventBox.classList.add("fade-in");
+        });
 }
 
 function sortEvents(events) {
@@ -82,6 +104,19 @@ function calculateProfit(event) {
       const profit = 1 - totalProb
       return profit
 }
+
+function clearEventContainers() {
+  const arbitraceBox = document.getElementById("arbitrace-container");
+  const eventBox = document.getElementById("highest-odds-container")
+  while (arbitraceBox.firstChild) {
+      arbitraceBox.removeChild(arbitraceBox.firstChild);
+  }
+
+  while (eventBox.firstChild) {
+      eventBox.removeChild(eventBox.firstChild)
+  }
+}
+
 
 
 

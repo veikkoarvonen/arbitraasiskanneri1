@@ -1,0 +1,109 @@
+/* CONSTANTS */
+
+:root {
+    --gray1: #3f4146;
+    --gray2: #545454;
+    --blue1: #3674B5;
+    --blue2: #578FCA;
+    --blue3: #A1E3F9;
+    --lato: "Lato", serif;
+    --nunito: "Nunito Sans", serif;
+}
+
+body {
+    background-color: var(--gray1);
+    margin: 0px;
+    padding: 0px;
+    overflow: auto;
+}
+
+/* TEXTS */
+
+h1 {
+    font-family: "Lato", serif;
+    font-weight: 700;
+    color: white;
+    margin: 0px;
+    padding: 10px 5%;
+}
+
+h2 {
+    font-family: "Nunito Sans", serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: white;
+    padding: 0px;
+    margin: 0px;
+}
+
+p {
+    font-family: "Nunito Sans", serif;
+    font-weight: 700;
+    font-size: 12px;
+    color: white;
+    padding: 0px;
+    margin: 0px 5px;
+}
+
+/* EVENT CONTAINERS */
+
+.event-container {
+    background-color: var(--gray2);
+    border-radius: 15px;
+    margin: 5px 5%;
+    padding: 5px;
+    border: solid var(--blue3) 1px;
+}
+
+.info-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px 5px;
+}
+
+.odds-container {
+    display: flex;
+    justify-content: space-evenly;
+    padding: 5px;
+}
+
+.odd-box {
+    background-color: var(--gray1);
+    border-radius: 10px;
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.decimal {
+    font-size: 18px;
+}
+
+/* BUTTON */
+
+button {
+    font-family: "Nunito Sans", serif;
+    font-weight: 600;
+    font-size: 20px;
+    color: white;
+    background-color: var(--gray2);
+    border: solid var(--blue3) 1px;
+    border-radius: 15px;
+    padding: 5px 10px;
+}
+
+button:hover {
+    cursor: pointer;
+    color: var(--blue3);
+    background-color: var(--gray1);
+}
+
+#update-button {
+    position: fixed;
+    bottom: 30px;
+    left: 5%;
+    z-index: 1000;
+}

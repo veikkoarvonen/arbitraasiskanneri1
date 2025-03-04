@@ -30,7 +30,7 @@ export function generateWinnerCombo(markets) {
     const overOdds = 1 / winnerCombo.overPrice
     const underOdds = 1 / winnerCombo.underPrice
     const totalProbability = overOdds + underOdds
-    const profit = 1 - totalProbability
+    const profit = (1 - totalProbability) / totalProbability
     const pb = parseFloat((1 + profit).toFixed(3));
     winnerCombo.payback = pb
     return winnerCombo

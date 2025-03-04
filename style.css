@@ -114,6 +114,70 @@ button:hover {
 }
 
 
+#league-button {
+    position: fixed;
+    bottom: 30px;
+    right: 5%;
+    z-index: 1000;
+}
+
+/* League menu */
+
+/* Menu styles */
+#menu {
+    position: fixed;
+    bottom: 80px; /* Adjust to appear below the button */
+    right: 5%;
+    background-color: var(--gray2);
+    border: solid var(--blue3) 1px;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 0px;
+    max-height: 250px; /* Adjust height as needed */
+    overflow-y: auto; /* Enable vertical scrolling */
+    width: 350px; /* Set a fixed width to avoid overflow */
+}
+
+#menu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+#menu li {
+    font-family: "Nunito Sans", serif;
+    font-weight: 600;
+    font-size: 20px;
+    color: white;
+    padding: 5px;
+    margin: 0px;
+    cursor: pointer;
+}
+
+#menu li:hover {
+    background-color: var(--blue3);
+    color: white;
+}
+
+/* Utility class to toggle visibility */
+.hidden {
+    display: none;
+}
+
+#menu::-webkit-scrollbar {
+    width: 8px;
+}
+
+#menu::-webkit-scrollbar-thumb {
+    background: var(--blue3);
+    border-radius: 5px;
+}
+
+#menu::-webkit-scrollbar-track {
+    background: var(--gray2);
+}
+
+
 /* Animations */
 
 @keyframes fadeInScale {

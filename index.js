@@ -1,33 +1,93 @@
-//Import data handling functions from dataFilter.js
+//Import functions from other files
 import { generateEventToDisplay, filterNonhalfPointers, generateWinnerCombo, filterMostFrequentOverScore, filterDifferentPoints, generateBettingMarkets } from './dataFilter.js';
-
-//Import UI update functions from uiUpdates.js
 import { generateTitleBox, generateMiddleParagraph, generateOddBox } from './uiUpdates.js';
+import { generateLink, fetchOdds } from "./APILink.js"
+
+
+//Hide menu within lauch
+toggleMenuVisibility();
+
+//variables
+var eventCombosToDisplay = []
+var selectedLeagueIndex = 0
+var JSONResults = []
+
+//Change to use test or live data
+var useLiveData = false
+
+
+//ADD EVENT LISTENERS
+//Handle menu clicks
+document.getElementById("league-button").addEventListener("click", function() {
+    toggleMenuVisibility()
+    console.log(selectedLeagueIndex)
+});
+
+// Attach click event listeners to each league
+document.querySelectorAll("#menu li").forEach((item, index) => {
+  item.addEventListener("click", function() {
+      selectLeague(index, item.textContent);
+  });
+});
 
 //Handle the update button click
 document.getElementById("update-button").addEventListener("click", function() {
-  const button = this;
 
+  const button = this;
   button.disabled = true
   button.classList.add("disabled-button");
-
   eventCombosToDisplay = []
   clearEventContainers();
-  parseData();
+
+  if (useLiveData) {
+    const requestLink = generateLink(selectedLeagueIndex); // Get API URL
+    fetchOdds(requestLink).then((data) => {
+        if (data) {
+            console.log("Successfully retrieved odds data!");
+            JSONResults = data
+            parseData();
+        }
+    });
+  } else {
+      parseData();
+  }
 
   setTimeout(() => {
     button.disabled = false;
     button.classList.remove("disabled-button"); 
-}, 1000); 
+}, 3000); 
 });
 
-//Array for events to display
-var eventCombosToDisplay = []
+//UI interaction
+function toggleMenuVisibility() {
+  const menu = document.getElementById("menu");
+  menu.classList.toggle("hidden"); // Toggle visibility
+}
+
+function selectLeague(index, leagueName) {
+  const button = document.getElementById("league-button");
+  button.textContent = leagueName; // Update button text
+  selectedLeagueIndex = index; // Save the selected index
+  toggleMenuVisibility(); // Close menu after selection
+  console.log(`Selected League: ${leagueName}, Index: ${selectedLeagueIndex}`);
+}
+
+
+
+
+
 
 function parseData() {
 
+    var dataArray = []
+
+    if (useLiveData) {
+        dataArray = JSONResults
+    } else {
+        dataArray = testJSONdata
+    }
     //Loop through each item in JSON
-    testJSONdata.forEach(game => {
+    dataArray.forEach(game => {
 
       //generate a betting market object from JSON data
       var bettingMarkets = generateBettingMarkets(game.bookmakers);

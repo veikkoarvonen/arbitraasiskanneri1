@@ -117,7 +117,7 @@ export function generateProfitBox(event) {
     const overProbability = 1 / event.winCombo.overPrice
     const underProbability = 1 / event.winCombo.underPrice
     const totalProbability = overProbability + underProbability
-    const profit = 1 - totalProbability
+    const profit = (1 - totalProbability) / totalProbability
     const profitPercentage = profit * 100
     const roundedProfit = parseFloat((profitPercentage).toFixed(2));
     profitDecimalBox.innerHTML = roundedProfit + "%"

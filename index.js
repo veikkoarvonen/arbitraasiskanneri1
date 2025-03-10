@@ -13,7 +13,7 @@ var selectedLeagueIndex = 0
 var JSONResults = []
 
 //Change to use test or live data
-var useLiveData = false
+var useLiveData = true
 
 
 //ADD EVENT LISTENERS
@@ -43,7 +43,7 @@ document.getElementById("update-button").addEventListener("click", function() {
     const requestLink = generateLink(selectedLeagueIndex); // Get API URL
     fetchOdds(requestLink).then((data) => {
         if (data) {
-            console.log("Successfully retrieved odds data!");
+            console.log(data);
             JSONResults = data
             parseData();
         }
@@ -107,6 +107,7 @@ function parseData() {
       //Generate an object with information to display & save for later use
       const event = generateEventToDisplay(game, winner)
       eventCombosToDisplay.push(event)
+      console.log(event)
     })
     sortEvents(eventCombosToDisplay);
     displayEvents();

@@ -46,23 +46,25 @@ const sportKeys = [
 ];
 
 
-
+    //Generate link for API call based on selected league
     export function generateLink(sportKeyIndex) {
         const baseURL = "https://api.the-odds-api.com/v4/sports/";
-        const sportID = sportKeys[sportKeyIndex]; // Get sport key from array
+        const sportID = sportKeys[sportKeyIndex]; 
         const middleURL = "/odds/?apiKey=";
-        const apiKey = getAPIKey(); // Fetch API key from the module
+        const apiKey = getAPIKey(); // Fetch API key
         const endURL = "&regions=us,us2,uk,au,eu&markets=totals&oddsFormat=decimal";
     
         if (!sportID) {
             console.error("Invalid sport index:", sportKeyIndex);
             return null;
         }
-    
+        
+        //Generate full URL
         const fullURL = `${baseURL}${sportID}${middleURL}${apiKey}${endURL}`;
         return fullURL;
     }
 
+    //Fetch JSON data using the generated link
     export async function fetchOdds(requestLink) {
         try {
             const response = await fetch(requestLink);

@@ -21,6 +21,7 @@ export function generateTitleBox(event) {
     return titleBox
 }
 
+//generate the middle paragraph
 export function generateMiddleParagraph(event) {
     const middleParagraph = document.createElement("p")
     const score = event.winCombo.score
@@ -29,6 +30,7 @@ export function generateMiddleParagraph(event) {
     return middleParagraph
 }
 
+//Generate div for odds, profit & prices
 export function generateOddBox(event) {
     const oddBox = document.createElement("div")
     oddBox.classList.add("odds-container")
@@ -52,6 +54,7 @@ export function generateOddBox(event) {
 
     return oddBox
 }
+
 
 export function generateOverBetBox(event) {
     const overBetBox = document.createElement("div")
@@ -137,6 +140,7 @@ export function generateProfitBox(event) {
     return profitBox
 }
 
+//Format the commence time
 function formatCommenceTime(isoString) {
     const date = new Date(isoString);
 

@@ -11,8 +11,11 @@ export function filterNonhalfPointers(markets) {
     return filteredMarkets
 }
 
+//Generate the best possible betting combo from markets
 export function generateWinnerCombo(markets) {
     var winnerCombo = new winnerMarketCombo(0, "Empty", 0, "Empty", 0, 0)
+
+    //Loop through markets to find highest odds
     markets.forEach(market => {
             if (market.overPrice > winnerCombo.overPrice) {
                 winnerCombo.overBooker = market.name
@@ -27,6 +30,7 @@ export function generateWinnerCombo(markets) {
 
     winnerCombo.score = markets[0].overScore
 
+    //Calculate the payback/profit
     const overOdds = 1 / winnerCombo.overPrice
     const underOdds = 1 / winnerCombo.underPrice
     const totalProbability = overOdds + underOdds
@@ -50,26 +54,34 @@ export function getPointVariations(markets) {
 
 //Filter array to display only the most frequent score
 export function filterMostFrequentOverScore(markets) {
-  if (markets.length === 0) return [];
+    if (markets.length === 0) return [];
 
-  // Step 1: Count occurrences of each overScore
-  const scoreCounts = {};
-  markets.forEach(market => {
-      scoreCounts[market.overScore] = (scoreCounts[market.overScore] || 0) + 1;
-  });
 
-  // Step 2: Find the most frequent overScore
-  const maxCount = Math.max(...Object.values(scoreCounts));
-  const mostFrequentScores = Object.keys(scoreCounts).filter(score => scoreCounts[score] === maxCount);
+    const scoreCounts = {};
+    markets.forEach(market => {
+        scoreCounts[market.overScore] = (scoreCounts[market.overScore] || 0) + 1;
+    });
 
-  // Step 3: Filter the array to keep only objects with the most frequent overScore
-  return markets.filter(market => mostFrequentScores.includes(String(market.overScore)));
+  
+    const maxCount = Math.max(...Object.values(scoreCounts));
+
+ 
+    const mostFrequentScores = Object.keys(scoreCounts)
+        .map(Number)
+        .filter(score => scoreCounts[score] === maxCount);
+
+   
+    const highestFrequentScore = Math.max(...mostFrequentScores);
+
+   
+    return markets.filter(market => market.overScore === highestFrequentScore);
 }
 
 
 
 
-//Filter markets with different over & under. Just in case
+
+//Filter markets with different over & under scores
 export function filterDifferentPoints(markets) {
     var filteredMarkets = []
     markets.forEach(market => {
@@ -97,6 +109,7 @@ export function generateBettingMarkets(bookmarkers) {
     return markers
 }
 
+//Generate an object for displayable event
 export function generateEventToDisplay(event, winCombo) {
     const title = event.sport_title
     const home = event.home_team
@@ -106,6 +119,9 @@ export function generateEventToDisplay(event, winCombo) {
     const newEvent = new eventToDisplay(title, home, away, beginning, winningCombo)
     return newEvent
 }
+
+
+//CUSTOM OBJECTS
 
 class bettingMarket {
     constructor(name, overScore, overPrice, underScore, underPrice) {

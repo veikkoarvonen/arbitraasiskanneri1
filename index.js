@@ -3,7 +3,6 @@ import { generateEventToDisplay, filterNonhalfPointers, generateWinnerCombo, fil
 import { generateTitleBox, generateMiddleParagraph, generateOddBox } from './uiUpdates.js';
 import { generateLink, fetchOdds } from "./APILink.js"
 
-
 //Hide menu within lauch
 toggleMenuVisibility();
 
@@ -33,14 +32,16 @@ document.querySelectorAll("#menu li").forEach((item, index) => {
 //Handle the update button click
 document.getElementById("update-button").addEventListener("click", function() {
 
+  //Disable button temporarily to avoid overlapping calls
   const button = this;
   button.disabled = true
   button.classList.add("disabled-button");
   eventCombosToDisplay = []
   clearEventContainers();
 
+  //Fetch live data or go straight to test data depending on the variable
   if (useLiveData) {
-    const requestLink = generateLink(selectedLeagueIndex); // Get API URL
+    const requestLink = generateLink(selectedLeagueIndex);
     fetchOdds(requestLink).then((data) => {
         if (data) {
             console.log(data);
@@ -52,6 +53,7 @@ document.getElementById("update-button").addEventListener("click", function() {
       parseData();
   }
 
+  //Enable button
   setTimeout(() => {
     button.disabled = false;
     button.classList.remove("disabled-button"); 
@@ -61,7 +63,7 @@ document.getElementById("update-button").addEventListener("click", function() {
 //UI interaction
 function toggleMenuVisibility() {
   const menu = document.getElementById("menu");
-  menu.classList.toggle("hidden"); // Toggle visibility
+  menu.classList.toggle("hidden"); 
 }
 
 function selectLeague(index, leagueName) {
@@ -69,7 +71,7 @@ function selectLeague(index, leagueName) {
   button.textContent = leagueName; // Update button text
   selectedLeagueIndex = index; // Save the selected index
   toggleMenuVisibility(); // Close menu after selection
-  console.log(`Selected League: ${leagueName}, Index: ${selectedLeagueIndex}`);
+  //console.log(`Selected League: ${leagueName}, Index: ${selectedLeagueIndex}`);
 }
 
 
@@ -107,14 +109,18 @@ function parseData() {
       //Generate an object with information to display & save for later use
       const event = generateEventToDisplay(game, winner)
       eventCombosToDisplay.push(event)
-      console.log(event)
+      //console.log(event)
     })
+
+    //Sort events and display them in UI
     sortEvents(eventCombosToDisplay);
     displayEvents();
 }
 
 
+
 function displayEvents() {
+  //Display events with 50 millisecond intervals
   eventCombosToDisplay.forEach((event, index) => {
       setTimeout(() => {
           displayOneEvent(event);
@@ -141,6 +147,7 @@ function displayOneEvent(event) {
         const arbitraceBox = document.getElementById("arbitrace-container")
         const eventBox = document.getElementById("highest-odds-container")
 
+        //If profitable, add div to arbitrage container, otherwise below
         if (calculateProfit(event) > 0) {
             arbitraceBox.appendChild(newEventBox)
         } else {
@@ -152,10 +159,12 @@ function displayOneEvent(event) {
         });
 }
 
+//Sort events
 function sortEvents(events) {
   events.sort((a, b) => calculateProfit(b) - calculateProfit(a)); // Sort descending (highest profit first)
 }
 
+//Calculate profit from a single event
 function calculateProfit(event) {
       const overPrice = event.winCombo.overPrice
       const underPrice = event.winCombo.underPrice
@@ -166,6 +175,8 @@ function calculateProfit(event) {
       return profit
 }
 
+
+//Clear UI. Called when updating the data
 function clearEventContainers() {
   const arbitraceBox = document.getElementById("arbitrace-container");
   const eventBox = document.getElementById("highest-odds-container")

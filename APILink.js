@@ -1,4 +1,4 @@
-import { getAPIKey } from "./APIKey.js"
+const userAPIKey = "YOUR_API_KEY"
 
 const sportKeys = [
     "soccer_argentina_primera_division", // Argentina Primera División
@@ -51,7 +51,7 @@ const sportKeys = [
         const baseURL = "https://api.the-odds-api.com/v4/sports/";
         const sportID = sportKeys[sportKeyIndex]; 
         const middleURL = "/odds/?apiKey=";
-        const apiKey = getAPIKey(); // Fetch API key
+        const apiKey = userAPIKey
         const endURL = "&regions=us,us2,uk,au,eu&markets=totals&oddsFormat=decimal";
     
         if (!sportID) {
